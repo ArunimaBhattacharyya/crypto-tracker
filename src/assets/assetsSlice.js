@@ -1,0 +1,132 @@
+import { createSlice } from "@reduxjs/toolkit";
+
+const sampleData = [
+    {
+        id: 'bitcoin',
+        name: 'Bitcoin',
+        symbol: 'BTC',
+        logo: '/logos/bitcoin-btc-logo.png',
+        price: 64325.19,
+        percentChange1h: -0.3,
+        percentChange24h: 1.2,
+        percentChange7d: 3.8,
+        marketCap: 1265000000000,
+        volume24h: 34500000000,
+        circulatingSupply: 19600000,
+        maxSupply: 21000000,
+        chart7d: [62000, 62500, 63000, 63500, 64000, 64500, 64325],
+    },
+    {
+        id: 'ethereum',
+        name: 'Ethereum',
+        symbol: 'ETH',
+        logo: '/logos/bitcoin-eth-logo.png',
+        price: 3265.45,
+        percentChange1h: 0.1,
+        percentChange24h: 2.5,
+        percentChange7d: -1.4,
+        marketCap: 392000000000,
+        volume24h: 15500000000,
+        circulatingSupply: 120000000,
+        maxSupply: null,
+        chart7d: [3100, 3150, 3200, 3250, 3280, 3260, 3265],
+    },
+    {
+        id: 'tether',
+        name: 'Tether',
+        symbol: 'USDT',
+        logo: '/logos/Tether-logo.png',
+        price: 1.00,
+        percentChange1h: 0.0,
+        percentChange24h: 0.0,
+        percentChange7d: 0.0,
+        marketCap: 110000000000,
+        volume24h: 35000000000,
+        circulatingSupply: 110000000000,
+        maxSupply: null,
+        chart7d: [1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00],
+    },
+    {
+        id: 'solana',
+        name: 'Solana',
+        symbol: 'SOL',
+        logo: '/logos/solana-logo.png',
+        price: 154.26,
+        percentChange1h: 0.5,
+        percentChange24h: 3.3,
+        percentChange7d: 8.7,
+        marketCap: 67600000000,
+        volume24h: 3200000000,
+        circulatingSupply: 437000000,
+        maxSupply: null,
+        chart7d: [140, 145, 150, 152, 155, 153, 154],
+    },
+    {
+        id: 'ripple',
+        name: 'XRP',
+        symbol: 'XRP',
+        logo: '/logos/xrp-logo.png',
+        price: 0.5321,
+        percentChange1h: -0.1,
+        percentChange24h: -1.2,
+        percentChange7d: -3.4,
+        marketCap: 28300000000,
+        volume24h: 1100000000,
+        circulatingSupply: 53400000000,
+        maxSupply: 100000000000,
+        chart7d: [0.51, 0.52, 0.54, 0.53, 0.55, 0.534, 0.532],
+    },
+    {
+        id: 'bnb',
+        name: 'BNB',
+        symbol: 'BNB',
+        logo: '/logos/bnb1-logo.png',
+        price: 597.22,
+        percentChange1h: 0.2,
+        percentChange24h: 1.5,
+        percentChange7d: 4.2,
+        marketCap: 92000000000,
+        volume24h: 2500000000,
+        circulatingSupply: 153000000,
+        maxSupply: 200000000,
+        chart7d: [560, 565, 580, 590, 600, 595, 597],
+    },
+    // {
+    //     id: 'solana',
+    //     name: 'Solana',
+    //     symbol: 'SOL',
+    //     logo: 'https://cryptologos.cc/logos/solana-sol-logo.png',
+    //     price: 154.26,
+    //     percentChange1h: 0.5,
+    //     percentChange24h: 3.3,
+    //     percentChange7d: 8.7,
+    //     marketCap: 67600000000,
+    //     volume24h: 3200000000,
+    //     circulatingSupply: 437000000,
+    //     maxSupply: null,
+    //     chart7d: [140, 145, 150, 152, 155, 153, 154],
+    // },
+    
+];
+
+const assetsSlice = createSlice({
+    name: 'assets',
+    initialState: sampleData,
+    reducers: {
+        updateAssets: (state) => {
+            return state.map(asset => {
+                const rand = (min, max) => (Math.random() * (max - min) + min).toFixed(2);
+                return {
+                    ...asset,
+                    price: +(asset.price * rand(0.98, 1.02)).toFixed(2),
+                    change1h: rand(-1,1),
+                    change24h: rand(-5,5),
+                    volume24h: +(asset.volume24h * rand(0.9, 1,1)).toFixed(0),
+                };
+            });
+        },
+    },
+});
+
+export const { updateAssets } = assetsSlice.actions;
+export default assetsSlice.reducer;
